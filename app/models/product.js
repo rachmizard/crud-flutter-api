@@ -35,13 +35,14 @@ Product.init(
 				},
 			},
 		},
-		createdAt: DataTypes.STRING,
-		updatedAt: DataTypes.STRING,
 	},
 	{
 		sequelize,
 		tableName: "Products",
 		modelName: "Product",
+		timestamps: true,
+		createdAt: true,
+		updatedAt: true,
 	}
 );
 
