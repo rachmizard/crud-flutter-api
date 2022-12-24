@@ -3,7 +3,7 @@ import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-import dbConfig from "app/config/config.json";
+import dbConfig from "app/config/config.js";
 
 const databaseConfig = dbConfig[process.env.NODE_ENV || "development"];
 

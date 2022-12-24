@@ -2,5 +2,5 @@
 	"watch": ["app"],
 	"ext": "js,ts,json",
 	"ignore": ["app/**/*.spec.ts"],
-	"exec": "babel-node ./app/server.js"
+	"exec": "babel-node --presets=@babel/preset-env ./app/server.js"
 }
