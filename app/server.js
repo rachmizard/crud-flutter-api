@@ -1,6 +1,10 @@
+/* eslint-disable no-undef */
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 import rootRouter from "./router";
 
@@ -32,7 +36,7 @@ app.use(function (_, res) {
 (async () => {
 	await initializeDB();
 
-	app.listen("4000", () => {
+	app.listen(process.env.PORT, () => {
 		console.log("Listening on 4000 PORT");
 	});
 })();

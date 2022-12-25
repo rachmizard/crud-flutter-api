@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"build": "esbuild ./app/server.js --platform=node --bundle --minify --outfile=built/index.js",
+		"build": "webpack --config webpack.config.js",
+		"start": "node ./dist/main.bundle.js",
 		"dev": "nodemon --config ./nodemon.json",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -27,11 +28,15 @@
 		"@babel/node": "^7.20.7",
 		"@babel/preset-env": "^7.20.2",
 		"@babel/register": "^7.18.9",
+		"babel-loader": "^9.1.0",
 		"babel-plugin-module-resolver": "^4.1.0",
 		"babel-register": "^6.26.0",
 		"esbuild": "^0.16.10",
 		"eslint": "^8.30.0",
 		"nodemon": "^2.0.20",
-		"sequelize-cli": "^6.5.2"
+		"sequelize-cli": "^6.5.2",
+		"webpack": "^5.75.0",
+		"webpack-cli": "^5.0.1",
+		"webpack-node-externals": "^3.0.0"
 	}
 }
