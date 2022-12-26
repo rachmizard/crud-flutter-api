@@ -36,7 +36,7 @@ export class AuthController extends AuthService {
 			.exists(),
 	];
 
-	async signIn(req, res, next) {
+	async signIn(req, res) {
 		try {
 			const { email, password } = req.body || {};
 
@@ -56,12 +56,10 @@ export class AuthController extends AuthService {
 				message: error.message,
 				status: error.status,
 			});
-		} finally {
-			next();
 		}
 	}
 
-	async signUp(req, res, next) {
+	async signUp(req, res) {
 		const transaction = await sequelize.transaction();
 		try {
 			const { name, email, password } = req.body || {};
@@ -86,8 +84,6 @@ export class AuthController extends AuthService {
 				message: error.message,
 				status: error.status,
 			});
-		} finally {
-			next();
 		}
 	}
 }

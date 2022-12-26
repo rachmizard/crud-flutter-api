@@ -10,7 +10,7 @@ module.exports = {
 				type: Sequelize.INTEGER,
 			},
 			auth_key: {
-				type: Sequelize.TE,
+				type: Sequelize.TEXT,
 				allowNull: false,
 			},
 			member_id: {

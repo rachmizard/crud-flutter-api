@@ -1,13 +1,21 @@
-FROM node:14 as build
-WORKDIR /app
-COPY package.json .
-RUN npm install
-COPY . .
-RUN npm run build
 
-FROM node:14-alpine as runtime
-WORKDIR /app
-COPY --from=build /app/dist ./dist
-COPY --from=build /app/node_modules ./node_modules
+FROM node:16 as build
+
+WORKDIR /app/flutter-product
+COPY package.json .
+RUN yarn install
+COPY . .
+RUN yarn build
+
+FROM node:16-alpine as runtime
+WORKDIR /app/flutter-product
+COPY --from=build /app/flutter-product ./
+# COPY --from=build /app/flutter-product/dist ./dist
+# COPY --from=build /app/flutter-product/node_modules ./node_modules
+# COPY --from=build /app/flutter-product/app ./
+# COPY --from=build /app/flutter-product/app ./
+
 EXPOSE 4000
-CMD ["node", "./dist/main.bundle.js"]
+
+HEALTHCHECK --interval=10s --timeout=5s \
+    CMD mysql -h mysql -u root -ppassword -e 'SELECT 1' || exit 1

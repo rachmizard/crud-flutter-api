@@ -13,6 +13,7 @@ const sequelize = new Sequelize({
 	password: databaseConfig.password,
 	dialect: databaseConfig.dialect,
 	host: databaseConfig.host,
+	port: databaseConfig.port,
 });
 
 export async function initializeDB() {

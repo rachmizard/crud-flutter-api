@@ -4,6 +4,7 @@ import { verifyToken } from "../middleware/auth";
 
 import { AuthController } from "../controllers/auth.controller";
 import { requestValidator } from "../middleware/request-validator";
+import { catchAsync } from "../utils/catchAsync";
 
 const controller = new AuthController();
 
@@ -13,19 +14,22 @@ authRouter.post(
 	"/signin",
 	controller.signInScheme,
 	requestValidator,
-	controller.signIn
+	catchAsync(controller.signIn)
 );
 authRouter.post(
 	"/signup",
 	controller.signUpScheme,
 	requestValidator,
-	controller.signUp
+	catchAsync(controller.signUp)
 );
-authRouter.post("/me", verifyToken, function (req, res) {
-	console.log("req", req.user);
-	res.status(200).json({
-		user: req.user,
-	});
-});
+authRouter.post(
+	"/me",
+	verifyToken,
+	catchAsync(function (req, res) {
+		res.status(200).json({
+			user: req.user,
+		});
+	})
+);
 
 export default authRouter;
