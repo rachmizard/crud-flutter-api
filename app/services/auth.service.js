@@ -41,39 +41,24 @@ export class AuthService {
 	}
 
 	async storeMemberToken(token, id) {
-		try {
-			return await MemberToken.create({
-				auth_key: token,
-				member_id: id,
-			});
-		} catch (error) {
-			throw new ApiError({
-				message: "AuthService:storeMemberToken: " + error.message,
-				status: 500,
-			});
-		}
+		return await MemberToken.create({
+			auth_key: token,
+			member_id: id,
+		});
 	}
 
 	async signUpWithEmailAndPassword({ name, email, password }) {
-		try {
-			const member = await Member.create({
-				name,
-				email,
-				password: hashingPassword(password, 4),
-			});
+		const member = await Member.create({
+			name,
+			email,
+			password: hashingPassword(password, 4),
+		});
 
-			const token = jwt.sign(member.dataValues);
+		const token = jwt.sign(member.dataValues);
 
-			return {
-				token,
-				...member.dataValues,
-			};
-		} catch (error) {
-			throw new ApiError({
-				message:
-					"AuthService:signUpWithEmailAndPassword: " + error.message,
-				status: 500,
-			});
-		}
+		return {
+			token,
+			...member.dataValues,
+		};
 	}
 }

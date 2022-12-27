@@ -14,6 +14,7 @@ const sequelize = new Sequelize({
 	dialect: databaseConfig.dialect,
 	host: databaseConfig.host,
 	port: databaseConfig.port,
+	logging: false,
 });
 
 export async function initializeDB() {

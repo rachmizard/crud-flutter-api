@@ -1,12 +1,17 @@
 {
 	"env": {
 		"browser": true,
-		"es2021": true
+		"es2021": true,
+		"jest/globals": true
 	},
 	"extends": "eslint:recommended",
 	"parserOptions": {
 		"ecmaVersion": 13,
 		"sourceType": "module"
 	},
-	"rules": {}
+	"rules": {
+		"jest-extended/prefer-to-be-true": "warn",
+		"jest-extended/prefer-to-be-false": "error"
+	},
+	"plugins": ["jest", "jest-extended"]
 }

@@ -20,7 +20,7 @@ class MemberToken extends Model {
 MemberToken.init(
 	{
 		member_id: DataTypes.STRING,
-		auth_key: DataTypes.STRING,
+		auth_key: DataTypes.TEXT,
 	},
 	{
 		sequelize,

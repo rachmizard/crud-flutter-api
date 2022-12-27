@@ -33,10 +33,4 @@ app.use(function (_, res) {
 	});
 });
 
-(async () => {
-	await initializeDB();
-
-	app.listen(process.env.PORT, () => {
-		console.log("Listening on 4000 PORT");
-	});
-})();
+export default app;
