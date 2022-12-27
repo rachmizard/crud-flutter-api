@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import { ProductController } from "../controllers/product.controller";
 import { requestValidator } from "../middleware/request-validator";
-import { catchAsync } from "../utils/catchAsync";
+import { catchAsync } from "../utils/catch-async";
 
 const productRouter = Router();
 

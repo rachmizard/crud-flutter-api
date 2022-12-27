@@ -59,7 +59,7 @@ export class ProductController {
 	}
 
 	static async update(req, res) {
-		const { id } = req.params || {};
+		const { id } = req.params;
 		const product = await productService.updateProductById(id, req.body);
 
 		res.status(200).json({
@@ -70,7 +70,7 @@ export class ProductController {
 	}
 
 	static async delete(req, res) {
-		const { id } = req.params || {};
+		const { id } = req.params;
 
 		await productService.deleteProductById(id);
 

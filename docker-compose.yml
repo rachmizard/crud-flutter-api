@@ -17,8 +17,6 @@ services:
   migrate:
     build: .
     command: yarn db:migrate
-    container_name: flutter-product-api-migrate
-    image: flutter-product-api-migrate
     env_file: ./.env
     environment:
       - NODE_ENV=production
@@ -32,12 +30,10 @@ services:
 
   app:
     depends_on:
-      - mysqldb
       - migrate
+      - mysqldb
     build: .
     command: yarn start
-    image: flutter-product-api-app
-    container_name: flutter-product-api-app
     env_file: ./.env
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
@@ -48,8 +44,6 @@ services:
       - DB_NAME=$MYSQLDB_DATABASE
       - DB_PORT=$MYSQLDB_DOCKER_PORT
       - DB_HOST=mysqldb
-    stdin_open: true
-    tty: true
 
 volumes: 
   db:

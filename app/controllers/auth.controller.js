@@ -1,7 +1,6 @@
 import { check } from "express-validator";
 
 import { AuthService } from "../services/auth.service";
-import sequelize from "../utils/database";
 
 export class AuthController extends AuthService {
 	constructor() {
@@ -60,7 +59,6 @@ export class AuthController extends AuthService {
 	}
 
 	async signUp(req, res) {
-		const transaction = await sequelize.transaction();
 		try {
 			const { name, email, password } = req.body || {};
 
@@ -72,14 +70,11 @@ export class AuthController extends AuthService {
 
 			const token = await super.storeMemberToken(auth.token, auth.id);
 
-			await transaction.commit();
-
 			res.status(200).json({
 				message: "Successful registered",
 				token: token.auth_key,
 			});
 		} catch (error) {
-			await transaction.rollback();
 			res.status(error.status).json({
 				message: error.message,
 				status: error.status,

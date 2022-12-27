@@ -4,38 +4,22 @@ import { ApiError } from "../utils/error";
 
 export class ProductService {
 	async getProducts() {
-		try {
-			return Product.findAll({
-				order: [["createdAt", "DESC"]],
-			});
-		} catch (error) {
-			throw new ApiError({
-				message: error.message,
-				status: error.status,
-				name: "ProductService:getProducts",
-			});
-		}
+		return Product.findAll({
+			order: [["createdAt", "DESC"]],
+		});
 	}
 
 	async getProductById(id) {
-		try {
-			const product = await Product.findByPk(id);
+		const product = await Product.findByPk(id);
 
-			if (!product) {
-				throw new ApiError({
-					message: `Product by ID: ${id} was not found`,
-					status: 404,
-				});
-			}
-
-			return product;
-		} catch (error) {
+		if (!product) {
 			throw new ApiError({
-				message: error.message,
-				status: error.status,
-				name: "ProductService:getProductById",
+				message: `Product by ID: ${id} was not found`,
+				status: 404,
 			});
 		}
+
+		return product;
 	}
 
 	async createProduct({ code, name, price }) {
@@ -55,48 +39,32 @@ export class ProductService {
 	}
 
 	async updateProductById(id, { code, name, price }) {
-		try {
-			const product = await Product.findByPk(id);
+		const product = await Product.findByPk(id);
 
-			if (!product) {
-				throw new ApiError({
-					message: `Product by ID: ${id} was not found`,
-					status: 404,
-				});
-			}
-
-			return await product.update({
-				code,
-				name,
-				price,
-			});
-		} catch (error) {
+		if (!product) {
 			throw new ApiError({
-				message: error.message,
-				status: error.status,
-				name: "ProductService:updateProductById",
+				message: `Product by ID: ${id} was not found`,
+				status: 404,
 			});
 		}
+
+		return await product.update({
+			code,
+			name,
+			price,
+		});
 	}
 
 	async deleteProductById(id) {
-		try {
-			const product = await Product.findByPk(id);
+		const product = await Product.findByPk(id);
 
-			if (!product) {
-				throw new ApiError({
-					message: `Product by ID: ${id} was not found`,
-					status: 404,
-				});
-			}
-
-			return await product.destroy();
-		} catch (error) {
+		if (!product) {
 			throw new ApiError({
-				message: error.message,
-				status: error.status,
-				name: "ProductService:deleteProductById",
+				message: `Product by ID: ${id} was not found`,
+				status: 404,
 			});
 		}
+
+		return await product.destroy();
 	}
 }

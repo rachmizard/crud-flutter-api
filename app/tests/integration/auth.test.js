@@ -8,6 +8,7 @@ const {
 	defaultPassword,
 } = require("../fixtures/auth.fixture");
 const setupDBTest = require("../utils/setupDBTest");
+const { defaultAuthorizedToken } = require("../fixtures/token.fixture");
 
 setupDBTest();
 
@@ -31,6 +32,22 @@ describe("Auth Integration Test", () => {
 			expect(registeredUser.name).toBe(userRegistrationFaker.name);
 			expect(registeredUser.email).toBe(userRegistrationFaker.email);
 			expect(registeredUser).toHaveProperty("id");
+		});
+
+		it("should return 400 due to validation check", async () => {
+			const errorValidationPayload = {
+				name: userRegistrationFaker.name,
+				password: userRegistrationFaker.password,
+			};
+
+			const res = await request(app)
+				.post("/api/auth/signup")
+				.send(errorValidationPayload);
+
+			expect(res.statusCode).toBe(400);
+			expect(res.body).toHaveProperty("validations");
+			expect(res.body).toHaveProperty("message");
+			expect(res.body.message).toEqual("ValidationError");
 		});
 	});
 
@@ -84,6 +101,25 @@ describe("Auth Integration Test", () => {
 			expect(res.body.message).toBe(
 				"Email or User not found, please provide correct email"
 			);
+		});
+	});
+
+	describe("POST /api/auth/me", () => {
+		it("should return 200 current active session", async () => {
+			const res = await request(app)
+				.post("/api/auth/me")
+				.set("Authorization", defaultAuthorizedToken);
+
+			expect(res.statusCode).toBe(200);
+		});
+
+		it("should return 403 due to missing token header", async () => {
+			const res = await request(app).post("/api/auth/me");
+
+			expect(res.statusCode).toBe(403);
+			expect(res.body).toEqual({
+				message: "A token is required for authentication",
+			});
 		});
 	});
 });

@@ -4,7 +4,7 @@ import { verifyToken } from "../middleware/auth";
 
 import { AuthController } from "../controllers/auth.controller";
 import { requestValidator } from "../middleware/request-validator";
-import { catchAsync } from "../utils/catchAsync";
+import { catchAsync } from "../utils/catch-async";
 
 const controller = new AuthController();
 
